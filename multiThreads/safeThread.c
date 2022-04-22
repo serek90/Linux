@@ -1,3 +1,8 @@
+/*
+*
+* @author: serek90(jseroczy)
+*/
+
 #include <pthread.h>
 #include <unistd.h>
 #include <stdio.h>
