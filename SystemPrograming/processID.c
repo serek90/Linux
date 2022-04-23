@@ -1,3 +1,10 @@
+/*
+* Simple program to print current process ID and
+* the ID of process which call this proces (parent ID)
+*
+* @athor: jseroczy(serek90)
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
