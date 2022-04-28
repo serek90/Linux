@@ -1,7 +1,7 @@
 /*
 *
-*First program when i using signals in Linux system
-*It is nothing special only my 
+* First program when i using signals in Linux system
+* From Jacob Sorber tutorial 
 */
 
 #include <unistd.h>
