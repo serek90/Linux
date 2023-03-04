@@ -3,8 +3,8 @@
 #include <mqueue.h>
 #include <errno.h>
 
-#define MAX_MSG 256
-#define MSG_SIZE 10
+#define MAX_MSG 10
+#define MSG_SIZE 256
 #define MSG_BUFFER_SIZE (MSG_SIZE + 10)
 #define PMODE 0666
 
