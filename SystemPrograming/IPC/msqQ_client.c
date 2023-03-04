@@ -4,14 +4,14 @@
 #include <errno.h>
 #include <string.h>
 
-#define MSG_BUFFER_SIZE 30
+#define MSG_BUFFER_SIZE 256
 #define PMODE 0666
 int main( int argc, char ** argv)
 {
         char buffer[MSG_BUFFER_SIZE];
         int msgQ_fd;
 
-        strcpy(buffer, "First");
+        strcpy(buffer, "First message");
 
         struct mq_attr attr;
         attr.mq_maxmsg = 20;
@@ -37,4 +37,3 @@ int main( int argc, char ** argv)
 
         return 0;
 }
-
