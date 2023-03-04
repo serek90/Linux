@@ -2,16 +2,28 @@
 #include <stdlib.h>
 #include <mqueue.h>
 #include <errno.h>
+#include <signal.h>
 
 #define MAX_MSG 10
 #define MSG_SIZE 256
 #define MSG_BUFFER_SIZE (MSG_SIZE + 10)
 #define PMODE 0666
 
+int running = 1;
+
+void intHandler( int dum )
+{
+        printf("Entere handler catch\n");
+        running = 0;
+}
+
 int main(int argc, char ** argv)
 {
         int msgQ_fd;
         char buffer[MSG_BUFFER_SIZE];
+
+        /* Ctrl + C handler set */
+        signal(SIGINT, intHandler);
 
         struct mq_attr attr;
         attr.mq_maxmsg = MAX_MSG;
@@ -26,7 +38,7 @@ int main(int argc, char ** argv)
         }
 
         fd_set readfsd;
-        while(1)
+        while(running)
         {
                 FD_ZERO(&readfsd);
                 FD_SET(msgQ_fd, &readfsd);
@@ -42,7 +54,10 @@ int main(int argc, char ** argv)
                 }
         }
 
+        /* close and destory */
         mq_close(msgQ_fd);
         mq_unlink("/my_queue");
+        printf("Queue closed and destoryed\n");
+
         return 0;
 }
