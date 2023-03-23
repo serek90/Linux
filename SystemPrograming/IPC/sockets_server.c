@@ -1,3 +1,10 @@
+/*
+*       description: Server for sockets IPC
+*
+*
+*/
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,6 +14,7 @@
 
 #define SOCKET_NAME "/tmp/newSock"
 #define BUFFER_SIZE 256
+#define MAX_CLIENTS_NUM 10
 
 int main(int argc, char **argv)
 {
@@ -40,9 +48,53 @@ int main(int argc, char **argv)
         }
         printf("(2) binding succes!\n");
 
+        /* (3) listen for incoming connections
+        * if there will come more than 1 connection put in the queue size = MAX_CLIENTS_NUM
+        * */
+        ret = listen(con_sock, MAX_CLIENTS_NUM);
+        if(ret == -1)
+        {
+                perror("listen failed:");
+                exit(EXIT_FAILURE);
+        }
         while(1)
         {
-                printf("(3) Waiting for incoming connections!\n");
+                printf("(4) Waiting for incoming connections!\n");
+                /* (4) accept incoming connection, blocking system call */
+                int data_sock = accept(con_sock, NULL, NULL);
+                if(data_sock == -1)
+                {
+                        perror("accept failed:");
+                        exit(EXIT_FAILURE);
+                }
+                printf("Connection accepted!\n");
+
+                /* (5) Sending data to client */
+                sprintf(buffer, "Please send your message\n");
+                ret = write(data_sock, buffer, BUFFER_SIZE);
+                if(ret == -1)
+                {
+                        perror("write call failed:");
+                        exit(EXIT_FAILURE);
+                }
+
+                /* (6) wait for packets with data, blocking system call */
+                printf("(6) Waiting for data from the client\n");
+                ret = read(data_sock, buffer, BUFFER_SIZE);
+                if(ret == -1)
+                {
+                        perror("read call failed:");
+                        exit(EXIT_FAILURE);
+                }
+
+                printf("Recevied data: %s\n", buffer);
+
+                /* break connection */
+                break;
         }
+
+        /* close socket */
+        close(con_sock);
+
         return 0;
 }
