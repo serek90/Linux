@@ -89,12 +89,15 @@ int main(int argc, char **argv)
 
                 printf("Recevied data: %s\n", buffer);
 
-                /* break connection */
-                break;
+                /*close connection */
+                close(data_sock);
         }
 
-        /* close socket */
+        /* close the master socket */
         close(con_sock);
+        printf("Master socket connection closed\n");
+        /* released resources */
+        unlink(SOCKET_NAME);
 
         return 0;
 }
