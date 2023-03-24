@@ -35,6 +35,18 @@ int main(int argc, char **argv)
         }
         printf("(2) Connected to the server\n");
 
+
+        sleep(10);
+        /* send message */
+        sprintf(buffer, "Hi server, how are you?\n");
+        ret = write(client_sock, buffer, BUFFER_SIZE);
+        if(ret == -1)
+        {
+                perror("write failed:");
+                exit(EXIT_FAILURE);
+        }
+
+        //sleep(1);
         /* receive message */
         ret = read(client_sock, buffer, BUFFER_SIZE);
         if(ret == -1)
@@ -45,15 +57,7 @@ int main(int argc, char **argv)
 
         printf("received message: %s", buffer);
 
-        /* send message */
-        sprintf(buffer, "Hi server, how are you?\n");
-        ret = write(client_sock, buffer, BUFFER_SIZE);
-        if(ret == -1)
-        {
-                perror("write failed:");
-                exit(EXIT_FAILURE);
-        }
-
+        sleep(1);
         /* close soecket */
         close(client_sock);
         return 0;
