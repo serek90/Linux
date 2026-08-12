@@ -1,0 +1,39 @@
+01_pid.c
+    getpid()
+    getppid()
+
+02_nice.c
+    getpriority()
+    setpriority()
+
+03_errno.c
+    errno
+    perror()
+
+04_fork.c
+    fork()
+    parent/child
+
+05_exec.c
+    fork()
+    exec()
+
+06_cpu.c
+    CPU intensive loop
+
+07_scheduler.c
+    sched_getscheduler()
+
+08_rusage.c
+    getrusage()
+
+09_proc.c
+    /proc/<pid>/status
+    /proc/<pid>/sched
+
+10_scheduler_experiment.c
+    fork()
+    + różne nice
+    + CPU intensive workload
+    + getrusage()
+    + obserwacja przez ps/top
